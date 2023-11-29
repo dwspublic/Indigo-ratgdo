@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<Devices>
+	<SupportURL>http://forums.indigodomo.com/viewforum.php?f=316</SupportURL>
+    <Device id="ratgdo" type="relay">
+        <Name>ratgdo GDO controller</Name>
+        <ConfigUI>
+			<Field id="SupportsOnState" type="checkbox" defaultValue="true" hidden="true" />
+			<Field id="SupportsSensorValue" type="checkbox" defaultValue="false" hidden="true" />
+            <Field type="checkbox" id="IsLockSubType" hidden="true" defaultValue="true" />
+
+            <Field id="brokerID" type="menu">
+                <Label>MQTT Broker:</Label>
+                <List class="self" filter="" method="get_mqtt_connectors" dynamicReload="true"/>
+            </Field>
+            <Field id="address" type="textfield"  defaultValue="">
+                <Label>ratgdo Device Name:</Label>
+            </Field>
+        </ConfigUI>
+        <States>
+           <State id="availability" defaultValue="">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Availability</TriggerLabel>
+                <ControlPageLabel>Availability</ControlPageLabel>
+            </State>
+            <State id="door" defaultValue="">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Door</TriggerLabel>
+                <ControlPageLabel>Door</ControlPageLabel>
+            </State>
+          <State id="light" defaultValue="">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Light</TriggerLabel>
+                <ControlPageLabel>Light</ControlPageLabel>
+            </State>
+          <State id="obstruction" defaultValue="">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Obstruction</TriggerLabel>
+                <ControlPageLabel>Obstruction</ControlPageLabel>
+            </State>
+        </States>
+    </Device>
+</Devices>
