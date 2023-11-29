@@ -1,7 +1,15 @@
 # Indigo-ratgdo
 Plugin for the Indigo Home Automation system to communicate with the ratgdo controller via MQTT
 
+If you didn't know, [b]ratgdo[/b] is an acronym for Rage Against The Garage Door Opener.  With a ratgdo device, you can regain control of your MyQ GDO.  Or any GDO using dry contact relays.  It uses MQTT to send status updates and receive commands.
+
+The plugin requires the MQTT Connector plugin (https://www.indigodomo.com/pluginstore/211/) and an MQTT Broker (such as https://www.indigodomo.com/pluginstore/260/).
+
 ## Installation
+
+Install and configure your MQTT Broker.
+
+Install the MQTT Connector plugin and configure it to connect to your MQTT Broker.
 
 Install ratgdo controller per the instructions at https://paulwieland.github.io/ratgdo/. Install the 
 default firmware for MQTT support.  Configure the controller to connect to your MQTT broker. Set the
