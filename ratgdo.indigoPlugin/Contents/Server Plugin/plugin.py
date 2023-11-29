@@ -91,6 +91,45 @@ class Plugin(indigo.PluginBase):
         retList.sort(key=lambda tup: tup[1])
         return retList
 
+    def create_trigger(self, valuesDict, typeId):
+
+        found = False
+
+        # look to see if there's an existing trigger for this message-type
+        for trigger in indigo.triggers:
+            try:
+                if trigger.pluginId != 'com.flyingdiver.indigoplugin.mqtt':
+                    continue
+                if trigger.pluginTypeId != 'topicMatch':
+                    continue
+                self.logger.debug(f"startup: Checking existing trigger: {trigger}")
+                if trigger.globalProps['com.flyingdiver.indigoplugin.mqtt']['message_type'] == RATGDO_MESSAGE_TYPE and \
+                        trigger.globalProps['com.flyingdiver.indigoplugin.mqtt']['brokerID'] == valuesDict['brokerID']:
+                    self.logger.info(f"Skipping trigger creation, trigger already exists: {trigger.name}")
+                    found = True
+                    return True
+            except Exception as e:
+                self.logger.debug(f"startup: Error reading trigger: {trigger}\n{e}")
+                continue
+
+        if not found:
+            broker = indigo.devices[int(valuesDict['brokerID'])]
+            name = f"ratgdo Trigger ({broker.name})"
+            try:
+                indigo.pluginEvent.create(name=name, pluginId="com.flyingdiver.indigoplugin.mqtt", pluginTypeId="topicMatch",
+                    props={
+                        "brokerID": valuesDict['brokerID'],
+                        "message_type": RATGDO_MESSAGE_TYPE,
+                        "queueMessage": "True",
+                        "match_list": ["Match: ratgdo", "Any: ", "Match: status"]
+                    })
+            except Exception as e:
+                self.logger.error(f"Error calling indigo.pluginEvent.create(): {e}")
+            else:
+                self.logger.info(f"Created trigger '{name} for message type '{RATGDO_MESSAGE_TYPE}'")
+
+        return True
+
     ########################################
     # Relay / Dimmer Action callback
     ########################################
