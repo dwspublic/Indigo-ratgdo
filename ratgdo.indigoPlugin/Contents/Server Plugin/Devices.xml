@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Devices>
-	<SupportURL>http://forums.indigodomo.com/viewforum.php?f=316</SupportURL>
+	<SupportURL>http://forums.indigodomo.com/viewforum.php?f=216</SupportURL>
     <Device id="ratgdo" type="relay">
         <Name>ratgdo GDO controller</Name>
         <ConfigUI>
