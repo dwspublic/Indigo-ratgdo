@@ -9,7 +9,8 @@ The plugin requires the MQTT Connector plugin (https://www.indigodomo.com/plugin
 
 Install and configure your MQTT Broker.
 
-Install the MQTT Connector plugin and configure it to connect to your MQTT Broker.
+Install the MQTT Connector plugin and configure it to connect to your MQTT Broker.  Subscribe to the 
+ratgdo topic ("ratgdo/#"). 
 
 Install ratgdo controller per the instructions at https://paulwieland.github.io/ratgdo/. Install the 
 default firmware for MQTT support.  Configure the controller to connect to your MQTT broker. Set the
