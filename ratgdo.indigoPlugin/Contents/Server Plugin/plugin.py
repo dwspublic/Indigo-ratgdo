@@ -23,8 +23,6 @@ class Plugin(indigo.PluginBase):
 
         self.ratgdo_devices = []
         self.mqttPlugin = indigo.server.getPlugin("com.flyingdiver.indigoplugin.mqtt")
-        if not self.mqttPlugin.isEnabled():
-            self.logger.warning("MQTT Connector plugin not enabled!")
 
         if old_version := self.pluginPrefs.get("version", "0.0.0") != self.pluginVersion:
             self.logger.debug(f"Upgrading plugin from version {old_version} to {self.pluginVersion}")
@@ -32,6 +30,10 @@ class Plugin(indigo.PluginBase):
 
     def startup(self):
         self.logger.info("Starting ratgdo")
+
+        if not self.mqttPlugin.isEnabled():
+            return "MQTT Connector plugin not enabled!"
+
         indigo.server.subscribeToBroadcast("com.flyingdiver.indigoplugin.mqtt", "com.flyingdiver.indigoplugin.mqtt-message_queued", "message_handler")
 
     def message_handler(self, notification):
@@ -144,8 +146,14 @@ class Plugin(indigo.PluginBase):
             self.logger.debug(f"actionControlDevice: Lock {device.name}")
             self.publish_topic(device, f"ratgdo/{device.address}/command/door", "close")
 
+        elif action.deviceAction == indigo.kUniversalAction.RequestStatus:
+            self.logger.debug(f"{device.name}: actionControlUniversal: RequestStatus")
+#            self.publish_topic(device, f"ratgdo/{device.address}/command", "query")
+            self.publish_topic(device, f"ratgdo/{device.address}/command/query", "")
+
         else:
             self.logger.error(f"{device.name}: actionControlDevice: Unsupported action requested: {action.deviceAction}")
+
 
     def publish_topic(self, device, topic, payload):
 
