@@ -75,7 +75,14 @@ class Plugin(indigo.PluginBase):
                     continue
 
                 ratgdo_status = topic_parts[3]
-                device.updateStateOnServer(key=ratgdo_status, value=payload)
+                
+                # if a newer version of ratgdo sends statuses we don't know
+                # about, let's just skip them until we can add them to
+                # Devices.xml as known states.
+                if ratgdo_status in device.states.keys():
+                    device.updateStateOnServer(key=ratgdo_status, value=payload)
+                else:
+                    self.logger.debug(f"processMessage: status type {ratgdo_status} not a known state, skipping updating on server")
 
                 if ratgdo_status == "door":
                     if payload == "closed":
