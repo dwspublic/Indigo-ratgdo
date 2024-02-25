@@ -37,6 +37,11 @@
                 <TriggerLabel>Obstruction</TriggerLabel>
                 <ControlPageLabel>Obstruction</ControlPageLabel>
             </State>
+          <State id="motion" defaultValue="">
+                <ValueType>String</ValueType>
+                <TriggerLabel>Motion</TriggerLabel>
+                <ControlPageLabel>Motion</ControlPageLabel>
+            </State>
         </States>
     </Device>
 </Devices>
